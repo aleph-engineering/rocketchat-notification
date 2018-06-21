@@ -8,7 +8,7 @@ Using GO >= 1.9 run
 
 
 ## How to use
-
+```
 Usage of ./rocket-notification:
   -c string
         Channel used to post the message (default "general")
@@ -22,7 +22,7 @@ Usage of ./rocket-notification:
         Rocket.Chat server (default "http://localhost:3000")
   -u string
         Rocket.Chat user (default "user")
-        
+```
 If the flag `-m` is not specified the program will read the message from standard input.
 
 
