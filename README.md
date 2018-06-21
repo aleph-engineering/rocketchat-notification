@@ -25,6 +25,9 @@ Usage of ./rocket-notification:
 ```
 If the flag `-m` is not specified the program will read the message from standard input.
 
+The following example will post the output of command ps to Rocket.Chat using code style.
+Ex: `ps | ./rocket-notification -s http://meet.cu.aleph.engineering -u jenkins -p owulacja -c general -code true`
+
 
 ## How to test
 
