@@ -70,6 +70,7 @@ func postMessage(channel, message, userToken, userId, server string) PostMessage
 func main() {
 	channel := flag.String("c", "general", "Channel used to post the message")
 	message := flag.String("m", "", "Message to post")
+	isCode := flag.Bool("code", false, "Wrap message in a code area")
 	user := flag.String("u", "user", "Rocket.Chat user")
 	password := flag.String("p", "password", "Rocket.Chat user's password")
 	server := flag.String("s", "http://localhost:3000", "Rocket.Chat server")
@@ -83,6 +84,11 @@ func main() {
 			new_msg = new_msg + line
 			line, err = reader.ReadString('\n')
 		}
+		message = &new_msg
+	}
+
+	if *isCode {
+		new_msg := "```"+*message+"```"
 		message = &new_msg
 	}
 
