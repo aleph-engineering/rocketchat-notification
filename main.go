@@ -7,6 +7,8 @@ import (
 	"encoding/json"
 	"log"
 	"flag"
+	"bufio"
+	"os"
 )
 
 type LoginResponse struct {
@@ -67,17 +69,28 @@ func postMessage(channel, message, userToken, userId, server string) PostMessage
 
 func main() {
 	channel := flag.String("c", "general", "Channel used to post the message")
-	message := flag.String("m", "Hey, I'm a message!", "Message to post")
+	message := flag.String("m", "", "Message to post")
 	user := flag.String("u", "user", "Rocket.Chat user")
 	password := flag.String("p", "password", "Rocket.Chat user's password")
 	server := flag.String("s", "http://localhost:3000", "Rocket.Chat server")
 	flag.Parse()
 
+	if *message == "" {
+		reader := bufio.NewReader(os.Stdin)
+		line, err := reader.ReadString('\n')
+		new_msg := ""
+		for err == nil {
+			new_msg = new_msg + line
+			line, err = reader.ReadString('\n')
+		}
+		message = &new_msg
+	}
+
 	loginData := login(*user, *password, *server)
 	if loginData.Status == "success" {
 		postMessageData := postMessage(*channel, *message, loginData.Data.AuthToken, loginData.Data.UserId, *server)
 		if postMessageData.Success {
-			log.Println("Message sent to channel: #" + *channel + " <"+*server+"> message: " + *message + " [ok]")
+			log.Println("Message sent to channel: #" + *channel + " <" + *server + "> message: " + *message + " [ok]")
 		} else {
 			log.Fatal(postMessageData.Error)
 		}
