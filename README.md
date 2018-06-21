@@ -32,4 +32,4 @@ Ex: `ps | ./rocket-notification -s http://meet.cu.aleph.engineering -u jenkins -
 ## How to test
 
 Install **github.com/stretchr/testify/assert** `go get -u -v github.com/stretchr/testify/assert`
-and run `go test`
+and run `go test -coverprofile cp.out`
