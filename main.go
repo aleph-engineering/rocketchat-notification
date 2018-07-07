@@ -78,6 +78,7 @@ func main() {
 	flag.Parse()
 
 	if *fromFile != "" {
+		log.Println("Loading configuration from file " + *fromFile)
 		config := ReadConfig(*fromFile)
 		if config.User != "" && *user == "" {
 			user = &config.User
@@ -91,6 +92,7 @@ func main() {
 	}
 
 	if *message == "" {
+		log.Println("Reading text from stdin")
 		reader := bufio.NewReader(os.Stdin)
 		line, err := reader.ReadString('\n')
 		new_msg := ""
