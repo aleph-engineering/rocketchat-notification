@@ -91,6 +91,10 @@ func main() {
 		}
 	}
 
+	if *user == "" || *password == "" || *server == "" || *channel == "" {
+		log.Fatal("Please provide all the needed params to execute the application. Use rocket-notification -h to read the help.")
+	}
+
 	if *message == "" {
 		log.Println("Reading text from stdin")
 		reader := bufio.NewReader(os.Stdin)
@@ -106,10 +110,6 @@ func main() {
 	if *isCode {
 		new_msg := "```" + *message + "```"
 		message = &new_msg
-	}
-
-	if *user == "" || *password == "" || *server == "" || *message == "" || *channel == "" {
-		log.Fatal("Please provide all the needed params to execute the application. Use rocket-notification -h to read the help.")
 	}
 
 	loginData := login(*user, *password, *server)
