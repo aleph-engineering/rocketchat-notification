@@ -106,6 +106,10 @@ func main() {
 		message = &new_msg
 	}
 
+	if *user == "" || *password == "" || *server == "" || *message == "" || *channel == "" {
+		log.Fatal("Please provide all the needed params to execute the application. Use rocket-notification -h to read the help.")
+	}
+
 	loginData := login(*user, *password, *server)
 	if loginData.Status == "success" {
 		postMessageData := postMessage(*channel, *message, loginData.Data.AuthToken, loginData.Data.UserId, *server)
