@@ -1,21 +1,21 @@
 package main
 
 import (
-	"strings"
-	"net/http"
-	"io/ioutil"
-	"encoding/json"
-	"log"
-	"flag"
 	"bufio"
+	"encoding/json"
+	"flag"
+	"io/ioutil"
+	"log"
+	"net/http"
 	"os"
+	"strings"
 )
 
 type LoginResponse struct {
 	Status  string
 	Error   string
 	Message string
-	Data struct {
+	Data    struct {
 		AuthToken string
 		UserId    string
 	}
@@ -70,11 +70,25 @@ func postMessage(channel, message, userToken, userId, server string) PostMessage
 func main() {
 	channel := flag.String("c", "general", "Channel used to post the message")
 	message := flag.String("m", "", "Message to post")
-	isCode := flag.Bool("code", false, "Wrap message in a code area")
-	user := flag.String("u", "user", "Rocket.Chat user")
-	password := flag.String("p", "password", "Rocket.Chat user's password")
+	isCode := flag.Bool("code", false, "Wrap message in a code area (default false)")
+	user := flag.String("u", "", "Rocket.Chat user")
+	password := flag.String("p", "", "Rocket.Chat user's password")
 	server := flag.String("s", "http://localhost:3000", "Rocket.Chat server")
+	fromFile := flag.String("f", "", "Configuration file (Optional)")
 	flag.Parse()
+
+	if *fromFile != "" {
+		config := ReadConfig(*fromFile)
+		if config.User != "" && *user == "" {
+			user = &config.User
+		}
+		if config.Password != "" && *password == "" {
+			password = &config.Password
+		}
+		if config.Server != "" && *server == "http://localhost:3000" {
+			server = &config.Server
+		}
+	}
 
 	if *message == "" {
 		reader := bufio.NewReader(os.Stdin)
@@ -88,7 +102,7 @@ func main() {
 	}
 
 	if *isCode {
-		new_msg := "```"+*message+"```"
+		new_msg := "```" + *message + "```"
 		message = &new_msg
 	}
 
