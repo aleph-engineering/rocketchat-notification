@@ -13,15 +13,17 @@ Usage of ./rocket-notification:
   -c string
         Channel used to post the message (default "general")
   -code
-        Wrap message in a code area
+        Wrap message in a code area (default false)
+  -f string
+        Configuration file (Optional)
   -m string
         Message to post
   -p string
-        Rocket.Chat user's password (default "password")
+        Rocket.Chat user's password
   -s string
         Rocket.Chat server (default "http://localhost:3000")
   -u string
-        Rocket.Chat user (default "user")
+        Rocket.Chat user
 ```
 If the flag `-m` is not specified the program will read the message from standard input.
 
