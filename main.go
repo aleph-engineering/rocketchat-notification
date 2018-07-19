@@ -99,17 +99,17 @@ func main() {
 		log.Println("Reading text from stdin")
 		reader := bufio.NewReader(os.Stdin)
 		line, err := reader.ReadString('\n')
-		new_msg := ""
+		newMsg := ""
 		for err == nil {
-			new_msg = new_msg + line
+			newMsg = newMsg + line
 			line, err = reader.ReadString('\n')
 		}
-		message = &new_msg
+		message = &newMsg
 	}
 
 	if *isCode {
-		new_msg := "```" + *message + "```"
-		message = &new_msg
+		newMsg := "```" + *message + "```"
+		message = &newMsg
 	}
 
 	loginData := login(*user, *password, *server)
