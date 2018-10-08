@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -105,6 +106,11 @@ func main() {
 			line, err = reader.ReadString('\n')
 		}
 		message = &newMsg
+		fmt.Println(*message)
+	}
+
+	if *message == "" {
+		log.Fatal("no message was set")
 	}
 
 	if *isCode {
