@@ -1,15 +1,15 @@
 package main
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
 	"log"
+	"testing"
 )
 
-const SERVER = "http://192.168.1.43:3030"
-const USER = "jenkins"
-const PASSWORD = "owulacja"
-const CHANNEL = "jenkins"
+const SERVER = "https://open.rocket.chat"
+const USER = "rcnotification"
+const PASSWORD = ""
+const CHANNEL = "rocketchat-notification"
 const MESSAGE = "This is a friendly test messaje"
 
 func TestLogin(t *testing.T) {
