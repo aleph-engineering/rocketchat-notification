@@ -35,8 +35,11 @@ Ex: `ps | ./rocket-notification -s http://meet.cu.aleph.engineering -u jenkins -
 You can also specify the basic configuration using environment variables
 
 `ROCKET_CHAT_USER` : for user
+
 `ROCKET_CHAT_PASSWORD`: for password
+
 `ROCKET_CHAT_SERVER`: for server url
+
 `ROCKET_CHAT_CHANNEL`: for channel 
 
 ## How to test
