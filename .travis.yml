@@ -4,4 +4,4 @@ services:
   - docker
 
 script:
-  - docker build -t alephdeveloper/rocketchat-notification
+  - docker build -t alephdeveloper/rocketchat-notification .
