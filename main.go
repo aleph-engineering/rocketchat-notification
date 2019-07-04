@@ -68,6 +68,28 @@ func postMessage(channel, message, userToken, userId, server string) PostMessage
 	return postMessageResponse
 }
 
+func loadConfigFromEnv(user, password, server, channel *string) {
+	envUser := os.Getenv("ROCKET_CHAT_USER")
+	if *user == "" && envUser != "" {
+		*user = envUser
+	}
+
+	envPassword := os.Getenv("ROCKET_CHAT_PASSWORD")
+	if *password == "" && os.Getenv("ROCKET_CHAT_PASSWORD") != "" {
+		*password = envPassword
+	}
+
+	envServer := os.Getenv("ROCKET_CHAT_SERVER")
+	if *server == "" && os.Getenv("ROCKET_CHAT_SERVER") != "" {
+		*server = envServer
+	}
+
+	envChannel := os.Getenv("ROCKET_CHAT_CHANNEL")
+	if *channel == "" && os.Getenv("ROCKET_CHAT_CHANNEL") != "" {
+		*channel = envChannel
+	}
+}
+
 func main() {
 	channel := flag.String("c", "general", "Channel used to post the message")
 	message := flag.String("m", "", "Message to post")
@@ -91,6 +113,8 @@ func main() {
 			server = &config.Server
 		}
 	}
+
+	loadConfigFromEnv(user, password, server, channel)
 
 	if *user == "" || *password == "" || *server == "" || *channel == "" {
 		log.Fatal("Please provide all the needed params to execute the application. Use rocket-notification -h to read the help.")

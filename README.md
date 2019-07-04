@@ -31,6 +31,14 @@ The following example will post the output of command ps to Rocket.Chat using co
 Ex: `ps | ./rocket-notification -s http://meet.cu.aleph.engineering -u jenkins -p password -c general -code true`
 
 
+## Using environment variables
+You can also specify the basic configuration using environment variables
+
+`ROCKET_CHAT_USER` : for user
+`ROCKET_CHAT_PASSWORD`: for password
+`ROCKET_CHAT_SERVER`: for server url
+`ROCKET_CHAT_CHANNEL`: for channel 
+
 ## How to test
 
 Install **github.com/stretchr/testify/assert** `go get -u -v github.com/stretchr/testify/assert`
