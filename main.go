@@ -80,12 +80,12 @@ func loadConfigFromEnv(user, password, server, channel *string) {
 	}
 
 	envServer := os.Getenv("ROCKET_CHAT_SERVER")
-	if *server == "" && os.Getenv("ROCKET_CHAT_SERVER") != "" {
+	if *server == "http://localhost:3000" && os.Getenv("ROCKET_CHAT_SERVER") != "" {
 		*server = envServer
 	}
 
 	envChannel := os.Getenv("ROCKET_CHAT_CHANNEL")
-	if *channel == "" && os.Getenv("ROCKET_CHAT_CHANNEL") != "" {
+	if *channel == "general" && os.Getenv("ROCKET_CHAT_CHANNEL") != "" {
 		*channel = envChannel
 	}
 }
