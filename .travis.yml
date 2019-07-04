@@ -5,5 +5,7 @@ services:
 
 script:
   - docker build -t alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER} .
+  - docker tag alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER} alephdeveloper/rocketchat-notification:latest
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER}
+  - docker push alephdeveloper/rocketchat-notification:latest
