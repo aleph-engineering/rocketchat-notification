@@ -18,3 +18,4 @@ deploy:
   file: rocketchat-notification
   on:
     repo: aleph-engineering/rocketchat-notification
+    tags: true
