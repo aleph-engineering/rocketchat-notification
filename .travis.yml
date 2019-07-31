@@ -1,14 +1,20 @@
 language: go
-
 services:
-  - docker
-
+- docker
 script:
-  - docker build -t alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER} .
-  - docker tag alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER} alephdeveloper/rocketchat-notification:latest
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER}
-  - docker push alephdeveloper/rocketchat-notification:latest
-  - id=$(docker create alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER})
-  - docker cp ${id}:/usr/bin/rocketchat-notification - > rocketchat-notification
-  - docker rm -v ${id}
+- docker build -t alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER} .
+- docker tag alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER} alephdeveloper/rocketchat-notification:latest
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker push alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER}
+- docker push alephdeveloper/rocketchat-notification:latest
+- id=$(docker create alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER})
+- docker cp ${id}:/usr/bin/rocketchat-notification - > rocketchat-notification
+- docker rm -v ${id}
+
+deploy:
+  provider: releases
+  api_key:
+    secure: rx2Jo6b1e/WE+wkXXhW5Bsg7PU/nxvZfzbwE1l3hfmG2gIcCF/TMwGzhPSTplMNZqApG2fTeABWmYKi+Z1D8XZSmbI4k0UzN6f6TEYCsj/1KaHcBUfBpcZplmDt2Xat+6QEtcyMINYrW/3aeLnX3FkTUD8M0Cndpvp2iJZNoiL+s/jDIznHXVOjCWqaF2l5BNqlEIBLCXVFcyxxXx2iE2mlmAueQX70pwMKIXKYrTUtvA3J0lXBAt/Q9yXI5aGIQZZ50c3OHp7a44VBbqBhGRW2MC01X+jvvx98OO/SuaJYCAIcNt6wreFA4SMhbzE2VQXjuVNkZpOdR7CbkUkvClIzo1Eff0sifO5mqzjouxUtOO8EQ38q/birUSe3IbH6D1fl6nA6ni2HXglWKIcC5i69d3AZnQVGQ2lG8d0nMJh0SlER3f2Pfe0zQxV7osNvZeSmDA3x2qDiMGTQ21SA6kWIvS1oPhaaXzbW0wPSXb9bvrNBKbpMRfs6yhGG8lsWPanQdNrhMwdfvyLOCLKWURHKGWL/ofwlvTqRJz2TemQHS/OXtYxP3Ig47feXItnnaD8A/GDYs4Z7ib+DrYRkwJx5kJj1OEcx9nyFaZPx6UhoOj01UEEflxWCBCRp4m8NMq5dGnwg0w9c6CK+kOxkwwlppLoBbjpPOBYLJi45NLDM=
+  file: rocketchat-notification
+  on:
+    repo: aleph-engineering/rocketchat-notification
