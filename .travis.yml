@@ -9,3 +9,6 @@ script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER}
   - docker push alephdeveloper/rocketchat-notification:latest
+  - id=$(docker create image-name)
+  - docker cp $id:/usr/bin/rocketchat-notification - > rocketchat-notification
+  - docker rm -v $id
