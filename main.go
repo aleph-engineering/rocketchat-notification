@@ -151,6 +151,7 @@ func main() {
 			log.Fatal(postMessageData.Error)
 		}
 	} else {
+		log.Println(loginData.Message)
 		log.Fatal(loginData.Error)
 	}
 }
