@@ -8,7 +8,7 @@ script:
 - docker push alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER}
 - docker push alephdeveloper/rocketchat-notification:latest
 - id=$(docker create alephdeveloper/rocketchat-notification:${TRAVIS_BUILD_NUMBER})
-- docker cp ${id}:/usr/bin/rocketchat-notification - > rocketchat-notification
+- docker cp ${id}:/usr/bin/rocketchat-notification .
 - docker rm -v ${id}
 
 deploy:
