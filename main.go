@@ -27,6 +27,10 @@ type PostMessageResponse struct {
 	Error   string
 }
 
+type LogoutResponse struct {
+	Status string
+}
+
 func login(user, password, server string) LoginResponse {
 	body := strings.NewReader(`user=` + user + `&password=` + password)
 	req, err := http.NewRequest("POST", server+"/api/v1/login", body)
@@ -66,6 +70,27 @@ func postMessage(channel, message, userToken, userId, server string) PostMessage
 	postMessageResponse := PostMessageResponse{}
 	err = json.Unmarshal(b, &postMessageResponse)
 	return postMessageResponse
+}
+
+func logout(userToken, userId, server string) LogoutResponse {
+	req, err := http.NewRequest("POST", server+"/api/v1/logout", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req.Header.Set("X-Auth-Token", userToken)
+	req.Header.Set("X-User-Id", userId)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	b, _ := ioutil.ReadAll(resp.Body)
+	logoutResponse := LogoutResponse{}
+	err = json.Unmarshal(b, &logoutResponse)
+	return logoutResponse
 }
 
 func loadConfigFromEnv(user, password, server, channel *string) {
@@ -149,6 +174,12 @@ func main() {
 			log.Println("Message sent to channel: #" + *channel + " <" + *server + "> message: " + *message + " [ok]")
 		} else {
 			log.Fatal(postMessageData.Error)
+		}
+		logout := logout(loginData.Data.AuthToken, loginData.Data.UserId, *server)
+		if logout.Status == "success" {
+			log.Println("log out [ok]")
+		} else {
+			log.Println("log out [failed]")
 		}
 	} else {
 		log.Println(loginData.Message)
